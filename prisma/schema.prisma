@@ -1,0 +1,67 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+model Admin {
+  Aid      Int      @id @default(autoincrement())
+  name     String   @db.Text
+  email    String?  @unique @db.VarChar(60)
+  password String   @db.Text
+  location String   @db.Text
+  address  String   @db.Text
+
+  @@map("admin")
+}
+
+model DeliveryPerson {
+  Did      Int      @id @default(autoincrement())
+  name     String   @db.VarChar(255)
+  email    String   @unique @db.VarChar(255)
+  password String   @db.VarChar(255)
+  city     String?  @db.VarChar(50)
+
+  @@map("delivery_persons")
+}
+
+model FoodDonation {
+  Fid         Int       @id @default(autoincrement())
+  name        String    @db.VarChar(50)
+  email       String    @db.VarChar(60)
+  food        String    @db.VarChar(50)
+  type        String    @db.Text
+  category    String    @db.Text
+  quantity    String    @db.Text
+  date        DateTime? @default(now()) @db.Timestamp(6)
+  address     String    @db.Text
+  location    String    @db.VarChar(50)
+  phoneno     String    @db.VarChar(25)
+  assigned_to Int?
+  delivery_by Int?
+
+  @@map("food_donations")
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String   @db.Text
+  email    String   @unique @db.VarChar(60)
+  password String   @db.Text
+  gender   String   @db.Text
+
+  @@map("login")
+}
+
+model UserFeedback {
+  feedback_id Int      @id @default(autoincrement())
+  name        String?  @db.VarChar(255)
+  email       String?  @db.VarChar(255)
+  message     String?  @db.Text
+
+  @@map("user_feedback")
+}
